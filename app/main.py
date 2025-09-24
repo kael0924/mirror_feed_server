@@ -1,11 +1,16 @@
 from typing import Union
 from fastapi import FastAPI
+from .routers import auth
+
 
 app = FastAPI()
-@app.get("/")
-def read_root():
-    return {"Helllo": "World"}
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int):
-    return {"item_id": item_id}
+
+app.include_router(auth.router)
+
+
+@app.get("/")
+async def root():
+    return {
+        "Page": "Index Page"
+}
