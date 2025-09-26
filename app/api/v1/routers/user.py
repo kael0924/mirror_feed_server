@@ -3,10 +3,10 @@ from sqlalchemy.orm import Session
 
 from app.crud import user as crud_user 
 from app.db.database import get_db
-from app.schemas.user import UserCreate, UserUpdate, UserRead
+from app.schemas.user import UserCreate
 
 
-router = APIRouter(prefix="/users", tags=["Users"])
+router = APIRouter(prefix="/users", tags=["users", "user"])
 
 
 

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from app.models.user import User
-from app.schemas.user import UserCreate, UserUpdate
-
+from app.schemas.user import UserCreate
+from app.schemas.user import UserLogin
 
 def create_user(db: Session, user: UserCreate) -> User:
     db_user = User(**user.model_dump()) 
@@ -23,7 +23,7 @@ def get_users(db: Session, skip: int = 0, limit: int = 100) -> list[User]:
 
 
 
-def update_user(db: Session, user_id: int, user_update: UserUpdate) -> User | None:
+def update_user(db: Session, user_id: int, user_update: any) -> User | None:
     db_user = db.query(User).filter(User.id == user_id).first()
 
     if db_user:
@@ -44,3 +44,8 @@ def delete_user(db: Session, user_id: int) -> User | None:
         db.commit()
     
     return db_user 
+
+def get_user_by_username(db: Session, username: str, password: str) -> User | None:
+    if username in db:
+        user_dict = db[username]
+        return UserLogin(**user_dict)
